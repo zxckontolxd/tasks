@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<head>
+    <style>
+	td {
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            border: 1px solid;
+        }
+        .yellow {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+
+    <p>Есть более интересный код у меня на акаунте с шадоубаном. Так же предлагаю посмотреть на другие репозитории.</p>
+    <p>Есть проект exchanger по обмену валют на go. Состоит из 2 микросервисов и 3 репозиториев. Думаю, это более релевантный код для данной вакансии.</p>
+    <p>В свободное время делаю игровой движок Aurora Core. Пока там мало чего реализовано и только в редакторе.</p>
+    <p>Немного расскажу про комментарии в этом задании. Не знаю, куда их вписать, тут они излишни.</p>
+
+    <button onclick="makeYellow()">Button 1</button>
+    <button onclick="countZeroNeighbors()">Button 2</button>
+    <button onclick="makeYellow()">Button 3</button>
+
+    <table id="table"></table>
+
+    <script>
+        function generateRandomTable(rows, cols) {
+            const table = document.getElementById('table');
+            for (let i = 0; i < rows; i++) {
+                const row = document.createElement('tr');
+                for (let j = 0; j < cols; j++) {
+                    const cell = document.createElement('td');
+                    cell.textContent = Math.random() < 0.5 ? 0 : 1;
+                    row.appendChild(cell);
+                }
+                table.appendChild(row);
+            }
+        }
+
+        function makeYellow() {
+            const cells = document.querySelectorAll('td');
+            cells.forEach(cell => cell.classList.add('yellow'));
+        }
+
+        function countZeroNeighbors() {
+            const table = document.getElementById('table');
+            const rows = table.rows;
+            let count = 0;
+
+            for (let i = 0; i < rows.length; i++) {
+                for (let j = 0; j < rows[i].cells.length; j++) {
+                    const cell = rows[i].cells[j];
+                    if (cell.textContent == '0') {
+                        let neighborOnes = 0;
+
+                        if (i > 0 && rows[i - 1].cells[j].textContent == '1') neighborOnes++;
+                        if (i < rows.length - 1 && rows[i + 1].cells[j].textContent == '1') neighborOnes++;
+                        if (j > 0 && rows[i].cells[j - 1].textContent == '1') neighborOnes++;
+                        if (j < rows[i].cells.length - 1 && rows[i].cells[j + 1].textContent == '1') neighborOnes++;
+
+                        if (neighborOnes > 2) count++;
+                    }
+                }
+            }
+            alert(`${count}`);
+            //сделано для упрощения. Осознаю, что этой функции тут быть не должно
+            makeYellow();
+        }
+        generateRandomTable(5, 5);
+    </script>
+
+</body>
+</html>
